@@ -725,11 +725,17 @@ def startup():
     t.start()
     print("  ✓  Auto-refresh thread started (every 24h)")
 
+# Initialize DB on import (works for both gunicorn and direct python run)
+try:
+    startup()
+    print("✓ Startup complete")
+except Exception as e:
+    print(f"✗ Startup error: {e}")
+
 if __name__ == "__main__":
     print("=" * 55)
     print("  LuckyCombi API")
     print("=" * 55)
-    startup()
 
     # Render sets PORT env variable; local uses 5000
     port = int(os.environ.get("PORT", 5000))
